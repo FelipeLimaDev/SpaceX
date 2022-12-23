@@ -7,6 +7,6 @@ import org.koin.dsl.module
 
 val useCaseModule = module {
     factory { UseCases(get(), get()) }
-    factory { HomeNewsUseCase(get()) }
+    factory { HomeNewsUseCase(get(), get()) }
     factory { NewDetailsUseCase(get()) }
 }

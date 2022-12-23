@@ -1,0 +1,42 @@
+CREATE TABLE  new_Entity(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    imageUrl TEXT NOT NULL,
+    newsSite TEXT NOT NULL,
+    summary TEXT NOT NULL,
+    title TEXT NOT NULL,
+    url TEXT NOT NULL,
+    timestamp INTEGER NOT NULL
+);
+
+selectAll:
+SELECT *
+FROM new_Entity;
+
+insertNew:
+INSERT OR REPLACE
+INTO new_Entity (
+    id,
+    imageUrl,
+    newsSite,
+    summary,
+    title,
+    url,
+    timestamp
+) VALUES (?, ?, ?, ?, ?, ?,?);
+
+
+getAllnews:
+SELECT *
+FROM new_Entity
+ORDER BY timestamp DESC;
+
+
+getNewById:
+SELECT * FROM new_Entity
+WHERE id = :id;
+
+
+
+
+
+

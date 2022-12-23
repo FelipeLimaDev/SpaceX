@@ -5,6 +5,7 @@ import com.fdlr.domain.model.model.UIComponentType
 import com.fdlr.domain.model.util.CommonFlow
 import com.fdlr.domain.model.util.DataState
 import com.fdlr.domain.model.util.asCommonFlow
+import com.fdlr.spacex.datasource.cache.SpaceCache
 import com.fdlr.spacex.datasource.network.model.NewDto
 import com.fdlr.spacex.datasource.network.model.NewsResponse
 import com.fdlr.spacex.datasource.network.services.SpaceXService
@@ -12,7 +13,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
 
 class HomeNewsUseCase(
-    private val spaceX: SpaceXService
+    private val spaceX: SpaceXService,
+    private val spaceCache: SpaceCache,
 ) {
     private var savedNews: List<NewDto> = emptyList()
     fun getNews(
@@ -21,10 +23,11 @@ class HomeNewsUseCase(
     ): CommonFlow<DataState<List<NewDto>>> = flow {
         try {
             emit(DataState.loading())
-//            delay(5000)
+            delay(4000)// just to show animation, api is fast
             val news = spaceX.getNews(limit, start)
-            emit(DataState.data(message = null, data = news))
-            savedNews = news
+            spaceCache.insert(news)
+            emit(DataState.data(message = null, data = spaceCache.getAll()))
+            savedNews = spaceCache.getAll()
         } catch (e: Exception) {
             emit(
                 DataState.error<NewsResponse>(

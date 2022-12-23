@@ -3,7 +3,7 @@ plugins {
     kotlin(KotlinPlugins.cocoapods)
     kotlin(KotlinPlugins.serialization) version Kotlin.version
     id(Plugins.androidLibrary)
-//    id(Plugins.sqlDelight)
+    id(Plugins.sqlDelight)
 }
 
 kotlin {
@@ -37,6 +37,7 @@ kotlin {
                 implementation(Ktor.ktorSerialization)
                 implementation(Ktor.ktorSerializationJson)
                 implementation(SQLDelight.sqlDelightRuntime)
+                implementation(DateTime.kotlinDateTime)
             }
         }
         val commonTest by getting
@@ -81,12 +82,9 @@ android {
     }
 }
 
-
-//
-//sqldelight {
-//    database("SpaceDatabase") {
-//        packageName = "com.fdlr.spacex.datasource.cache"
-//        sourceFolders = listOf("sqldelight")
-//    }
-//
-//}
+sqldelight {
+    database("SpaceDatabase") {
+        packageName = "com.fdlr.spacex.datasource.cache"
+        sourceFolders = listOf("sqldelight")
+    }
+}

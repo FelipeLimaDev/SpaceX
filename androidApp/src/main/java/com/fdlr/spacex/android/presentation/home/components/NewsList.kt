@@ -10,11 +10,14 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.fdlr.spacex.android.presentation.components.AnimatedBg
 import com.fdlr.spacex.android.presentation.components.NewImage
-import com.fdlr.spacex.android.presentation.utils.*
+import com.fdlr.spacex.android.presentation.utils.paddingHorzMedium
+import com.fdlr.spacex.android.presentation.utils.paddingSmall
+import com.fdlr.spacex.android.presentation.utils.paddingTopMedium
+import com.fdlr.spacex.android.presentation.utils.paddingXXSmall
 import com.fdlr.spacex.android.presentation.utils.theme.SpaceXShapes
 import com.fdlr.spacex.datasource.network.model.NewDto
 
@@ -26,21 +29,21 @@ fun NewsList(
     page: Int,
     onTriggerNextPage: () -> Unit,
 ) {
-        LazyColumn(
-            Modifier
-                .paddingHorzMedium()
-                .paddingTopMedium()) {
-            items(news.size) { index ->
-                if ((index + 1) >= (page * 15) && !loading) {
-                    onTriggerNextPage()
-                }
-                NewItem(
-                    new = news[index],
-                    onClickNewItem = onClickNewItem
-                )
+    LazyColumn(
+        Modifier
+            .paddingHorzMedium()
+            .paddingTopMedium()
+    ) {
+        items(news.size) { index ->
+            if ((index + 1) >= (page * 15) && !loading) {
+                onTriggerNextPage()
             }
+            NewItem(
+                new = news[index],
+                onClickNewItem = onClickNewItem
+            )
         }
-
+    }
 }
 
 @Composable
@@ -51,6 +54,7 @@ fun NewItem(
     Column(
         Modifier
             .fillMaxWidth()
+            .clip(MaterialTheme.shapes.large)//clip ripple effect
             .clickable {
                 onClickNewItem(new.id)
             }
