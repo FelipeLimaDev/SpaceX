@@ -9,13 +9,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -33,7 +30,8 @@ fun SearchBar(
     query: String,
     onQueryChanged: (String) -> Unit,
     onExecuteSearch: (String) -> Unit,
-    reset:() -> Unit,
+    reset: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
@@ -54,7 +52,7 @@ fun SearchBar(
     }
 
     Box(
-        Modifier
+        modifier
             .fillMaxWidth()
             .paddingHorzMedium()
             .paddingTopSmall()
@@ -80,9 +78,9 @@ fun SearchBar(
             trailingIcon = if (query.isNotBlank()) trailingIconView else null,
             keyboardActions = KeyboardActions(
                 onDone = {
-                    if (query.isNotBlank()&& query.length > 2) {
+                    if (query.isNotBlank() && query.length > 2) {
                         onExecuteSearch(query)
-                    }else{
+                    } else {
                         reset()
                     }
                     keyboardController?.hide()

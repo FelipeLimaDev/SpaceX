@@ -21,7 +21,7 @@ class HomeNewsUseCase(
     ): CommonFlow<DataState<List<NewDto>>> = flow {
         try {
             emit(DataState.loading())
-            delay(5000)
+//            delay(5000)
             val news = spaceX.getNews(limit, start)
             emit(DataState.data(message = null, data = news))
             savedNews = news

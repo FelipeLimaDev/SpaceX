@@ -10,6 +10,7 @@ object SpaceXColors {
         val deepPurple500 = Color(0xFF9C27B0)
         val deepOrange500Light = Color(0xFF964CA3)
         val black = Color(0xFF000000)
+        val grey = Color(0xFF2B2B2B)
         val white = Color(0xFFFFFFFF)
         val red = Color(0xFFF44336)
         val grey500 = Color(0xFF9E9E9E)

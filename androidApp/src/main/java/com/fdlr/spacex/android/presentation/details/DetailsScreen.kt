@@ -1,22 +1,37 @@
 package com.fdlr.spacex.android.presentation.details
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import com.fdlr.spacex.android.presentation.details.components.DetailView
+import com.fdlr.spacex.presentation.details.DetailsEvents
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import org.koin.androidx.compose.koinViewModel
 
 @Destination
 @Composable
 fun DetailsScreen(
     id: Int,
     navigator: DestinationsNavigator,
+    viewModel: DetailsViewModel = koinViewModel()
 ) {
-    Box(Modifier.fillMaxSize().background(Color.Green)) {
+    val state = viewModel.state.value
 
-    }
+    DetailView(
+        new = state.new,
+        isLoading = state.isLoading,
+        onOpenWebsite = { open ->
+//            viewModel.onTriggerEvent(DetailsEvents.OnOpenWebsite(open))
+        },
+        onRemoveHeadMessageFromQueue = {
+            viewModel.onTriggerEvent(DetailsEvents.OnRemoveHeadMessageFromQueue)
+        },
+        onNavigateUp = {
+            navigator.navigateUp()
+        }
+    )
+
+    viewModel.onTriggerEvent(DetailsEvents.LoadNew(id))
 
 }
+
+

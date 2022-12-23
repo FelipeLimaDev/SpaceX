@@ -1,7 +1,8 @@
 package com.fdlr.spacex.android.presentation.home
 
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import com.fdlr.spacex.android.presentation.components.AnimatedBg
+import com.fdlr.spacex.android.presentation.components.CustomAboutDialog
 import com.fdlr.spacex.android.presentation.components.LoadingState
 import com.fdlr.spacex.android.presentation.destinations.DetailsScreenDestination
 import com.fdlr.spacex.android.presentation.home.components.NewsView
@@ -18,6 +19,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = koinViewModel()
 ) {
     val state = viewModel.state.value
+    var isCustomAboutDialog by remember { mutableStateOf(false) }
 
     AnimatedBg {
         NewsView(
@@ -28,11 +30,19 @@ fun HomeScreen(
             onTriggerEvent = viewModel::onTriggerEvent,
             onClickNewItem = { id ->
                 navigator.navigate(DetailsScreenDestination(id = id))
-            })
+            },
+            showAboutTheApp = { isCustomAboutDialog = true })
 
         if (state.isLoading) {
             LoadingState()
         }
+
+        CustomAboutDialog(
+            showDialog = isCustomAboutDialog,
+            onDismissRequest = {
+                isCustomAboutDialog = false
+            }
+        )
     }
 
 }
