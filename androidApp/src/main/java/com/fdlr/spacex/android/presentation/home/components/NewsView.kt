@@ -90,7 +90,8 @@ fun NewsView(
                         },
                         onTriggerNextPage = {
                             onTriggerEvent(HomeEvents.NextPage)
-                        })
+                        },
+                        onRefresh = { onTriggerEvent(HomeEvents.LoadNews) })
                 }
             }
         }

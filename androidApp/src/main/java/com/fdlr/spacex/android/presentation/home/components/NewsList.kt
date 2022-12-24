@@ -3,11 +3,8 @@ package com.fdlr.spacex.android.presentation.home.components
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,6 +17,8 @@ import com.fdlr.spacex.android.presentation.utils.paddingTopMedium
 import com.fdlr.spacex.android.presentation.utils.paddingXXSmall
 import com.fdlr.spacex.android.presentation.utils.theme.SpaceXShapes
 import com.fdlr.spacex.datasource.network.model.NewDto
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun NewsList(
@@ -28,20 +27,54 @@ fun NewsList(
     onClickNewItem: (Int) -> Unit,
     page: Int,
     onTriggerNextPage: () -> Unit,
+    onRefresh: () -> Unit,
 ) {
-    LazyColumn(
-        Modifier
-            .paddingHorzMedium()
-            .paddingTopMedium()
+    var refreshing by remember { mutableStateOf(false) }
+
+    refreshing = loading
+
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(loading),
+        indicator = { _, _ -> },//remove the default indicator
+        onRefresh = {
+            refreshing = true
+            onRefresh()
+        },
     ) {
-        items(news.size) { index ->
-            if ((index + 1) >= (page * 15) && !loading) {
-                onTriggerNextPage()
+        LazyColumn(
+            Modifier
+                .paddingHorzMedium()
+                .paddingTopMedium()
+        ) {
+            item {
+                if (refreshing)
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(20.dp),
+                            strokeWidth = 2.dp,
+                            color = Color.White
+                        )
+                        Text(
+                            text = "Updating News...",
+                            Modifier.paddingSmall(),
+                            color = Color.White,
+                            style = MaterialTheme.typography.caption
+                        )
+                    }
             }
-            NewItem(
-                new = news[index],
-                onClickNewItem = onClickNewItem
-            )
+            items(news.size) { index ->
+                if ((index + 1) >= (page * 15) && !loading) {
+                    onTriggerNextPage()
+                }
+                NewItem(
+                    new = news[index],
+                    onClickNewItem = onClickNewItem
+                )
+            }
         }
     }
 }

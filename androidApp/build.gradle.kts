@@ -69,5 +69,5 @@ dependencies {
     implementation(Ktor.ktorSerializationJson)
 
     implementation(Accompanist.lottieCompose)
-
+    implementation(Accompanist.swipeRefresh)
 }
