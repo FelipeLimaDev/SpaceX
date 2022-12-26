@@ -1,9 +1,15 @@
 package com.fdlr.spacex.android.presentation.utils.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import com.fdlr.domain.model.model.GenericMessageInfo
+import com.fdlr.domain.model.util.Queue
+import com.fdlr.spacex.android.presentation.components.ProcessDialogQueue
 
 private val SpaceXLightThemeColors = lightColors(
     primary = SpaceXColors.Palette.deepPurple500,
@@ -27,6 +33,8 @@ private val SpaceXDarkThemeColors = SpaceXLightThemeColors
 @Composable
 fun SpaceXTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
+    dialogQueue: Queue<GenericMessageInfo> = Queue(mutableListOf()),
+    onRemoveHeadMessageFromQueue: () -> Unit,
     content: @Composable () -> Unit
 ) {
     MaterialTheme(
@@ -35,4 +43,11 @@ fun SpaceXTheme(
         shapes = SpaceXShapes,
         content = content
     )
+
+    Box(Modifier.fillMaxSize()) {
+        ProcessDialogQueue(
+            dialogQueue = dialogQueue,
+            onRemoveHeadMessageFromQueue = onRemoveHeadMessageFromQueue,
+        )
+    }
 }

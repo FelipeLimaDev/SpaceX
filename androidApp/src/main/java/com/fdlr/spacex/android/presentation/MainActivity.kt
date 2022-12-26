@@ -8,6 +8,7 @@ import com.ramcosta.composedestinations.DestinationsNavHost
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             DestinationsNavHost(navGraph = NavGraphs.root)
         }

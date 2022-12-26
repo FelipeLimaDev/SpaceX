@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fdlr.domain.model.model.GenericMessageInfo
+import com.fdlr.domain.model.model.PositiveAction
 import com.fdlr.domain.model.model.UIComponentType
 import com.fdlr.domain.model.util.GenericMessageInfoQueueUtil
 import com.fdlr.domain.model.util.Queue
@@ -52,6 +53,7 @@ class HomeViewModel(
                     .title("Invalid Event")
                     .uiComponentType(UIComponentType.Dialog)
                     .description("Something went wrong.")
+                    .positive(PositiveAction("Ok") { removeHeadMessage() })
                 appendToMessageQueue(messageInfo = messageInfoBuilder)
             }
         }
