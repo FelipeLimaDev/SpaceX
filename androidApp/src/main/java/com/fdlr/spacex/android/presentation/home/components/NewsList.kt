@@ -24,6 +24,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 @Composable
 fun NewsList(
     loading: Boolean,
+    query: String,
     news: List<NewDto>,
     onClickNewItem: (Int) -> Unit,
     page: Int,
@@ -77,7 +78,7 @@ fun NewsList(
                 )
             }
             item {
-                if (!loading && news.isEmpty()) {
+                if (!loading && news.isEmpty() && query.isEmpty()) {
                     Column(
                         modifier = Modifier
                             .fillMaxSize(),

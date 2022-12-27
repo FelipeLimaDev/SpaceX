@@ -66,7 +66,7 @@ fun HomeScreen(
                 }
             )
 
-            if (status == ConnectivityObserver.Status.Unavailable) {
+            if (status == ConnectivityObserver.Status.Unavailable || status == ConnectivityObserver.Status.Lost || status == ConnectivityObserver.Status.Losing) {
                 NoConnectionScreen()
             }
         }

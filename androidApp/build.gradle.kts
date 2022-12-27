@@ -58,6 +58,7 @@ dependencies {
     implementation(Compose.activityCompose)
     implementation(Compose.composeIconsExtended)
     implementation(Accompanist.coilCompose)
+    implementation(Accompanist.systemuicontroller)
 
     implementation(Koin.koinCompose)
 
@@ -68,6 +69,6 @@ dependencies {
     implementation(Ktor.ktorSerialization)
     implementation(Ktor.ktorSerializationJson)
 
-    implementation(Accompanist.lottieCompose)
+    implementation(Lottie.lottieCompose)
     implementation(Accompanist.swipeRefresh)
 }

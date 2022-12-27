@@ -9,6 +9,7 @@
         android:name="com.fdlr.spacex.android.SpaceXApplication"
         android:allowBackup="false"
         android:supportsRtl="true"
+        android:label="Space X"
         android:theme="@style/AppTheme">
         <activity
             android:name="com.fdlr.spacex.android.presentation.MainActivity"

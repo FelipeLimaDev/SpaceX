@@ -82,6 +82,7 @@ fun NewsView(
 
                     NewsList(
                         loading = loading,
+                        query = query,
                         news = news,
                         page = page,
                         onClickNewItem = {
