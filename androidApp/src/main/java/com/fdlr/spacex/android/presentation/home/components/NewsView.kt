@@ -36,7 +36,7 @@ fun NewsView(
     val focusManager = LocalFocusManager.current
     var showButton by remember { mutableStateOf(true) }
 
-    SpaceXTheme {
+
         Scaffold()
         {
             AnimatedBg(2000) {
@@ -82,6 +82,7 @@ fun NewsView(
 
                     NewsList(
                         loading = loading,
+                        query = query,
                         news = news,
                         page = page,
                         onClickNewItem = {
@@ -96,4 +97,3 @@ fun NewsView(
             }
         }
     }
-}

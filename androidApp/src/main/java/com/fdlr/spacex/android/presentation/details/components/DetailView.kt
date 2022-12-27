@@ -26,7 +26,6 @@ import com.fdlr.spacex.android.presentation.utils.paddingMedium
 import com.fdlr.spacex.android.presentation.utils.paddingSmall
 import com.fdlr.spacex.android.presentation.utils.paddingXXSmall
 import com.fdlr.spacex.android.presentation.utils.theme.SpaceXShapes
-import com.fdlr.spacex.android.presentation.utils.theme.SpaceXTheme
 import com.fdlr.spacex.datasource.network.model.NewDto
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -34,120 +33,116 @@ import com.fdlr.spacex.datasource.network.model.NewDto
 fun DetailView(
     new: NewDto?,
     isLoading: Boolean,
-    onOpenWebsite: (Boolean) -> Unit,
-    onRemoveHeadMessageFromQueue: () -> Unit,
     onNavigateUp: () -> Unit
 ) {
     val uriHandler = LocalUriHandler.current
-    SpaceXTheme {
-        Scaffold()
-        {
-            AnimatedBg(2000) {
-                if (new != null) {
+    Scaffold()
+    {
+        AnimatedBg(2000) {
+            if (new != null) {
+                Column(
+                    Modifier
+                        .fillMaxSize()
+                        .paddingMedium()
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .background(Color.White.copy(alpha = 0.7f))
+                    ) {
+                        IconButton(onClick = { onNavigateUp() }) {
+                            Icon(
+                                imageVector = Icons.Default.ArrowBack,
+                                contentDescription = "Back",
+                                tint = Color.Black
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(20.dp))
                     Column(
                         Modifier
                             .fillMaxSize()
-                            .paddingMedium()
+                            .clip(MaterialTheme.shapes.large)
+                            .verticalScroll(rememberScrollState())
+                            .background(Color.Black.copy(0.7f))
                     ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier
-                                .clip(CircleShape)
-                                .background(Color.White.copy(alpha = 0.7f))
-                        ) {
-                            IconButton(onClick = { onNavigateUp() }) {
-                                Icon(
-                                    imageVector = Icons.Default.ArrowBack,
-                                    contentDescription = "Back",
-                                    tint = Color.Black
+                        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.TopStart) {
+                            Box(
+                                Modifier
+                                    .clip(MaterialTheme.shapes.large),
+                                contentAlignment = Alignment.BottomEnd
+                            ) {
+                                NewImage(
+                                    url = new.imageUrl,
+                                    contentDescription = new.title,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(330.dp)
                                 )
-                            }
-                        }
-                        Spacer(modifier = Modifier.height(20.dp))
-                        Column(
-                            Modifier
-                                .fillMaxSize()
-                                .clip(MaterialTheme.shapes.large)
-                                .verticalScroll(rememberScrollState())
-                                .background(Color.Black.copy(0.7f))
-                        ) {
-                            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.TopStart) {
-                                Box(
-                                    Modifier
-                                        .clip(MaterialTheme.shapes.large),
-                                    contentAlignment = Alignment.BottomEnd
-                                ) {
-                                    NewImage(
-                                        url = new.imageUrl,
-                                        contentDescription = new.title,
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .height(330.dp)
-                                    )
-                                    if (!new.url.isNullOrBlank()) {
-                                        Surface(
-                                            color = Color.White.copy(alpha = 0.7f),
-                                            modifier = Modifier
-                                                .paddingXXSmall()
-                                                .wrapContentWidth()
-                                                .wrapContentHeight()
-                                                .clickable { uriHandler.openUri(new.url) },
-                                            shape = SpaceXShapes.large
-                                        ) {
-                                            Text(
-                                                text = "Open website",
-                                                style = TextStyle(
-                                                    color = Color.Black,
-                                                    fontSize = 16.sp
-                                                ),
-                                                modifier = Modifier.paddingSmall()
-                                            )
-                                        }
-                                    }
-                                }
-                                if (!new.newsSite.isNullOrBlank()) {
+                                if (!new.url.isNullOrBlank()) {
                                     Surface(
-                                        color = Color.Black.copy(alpha = 0.7f),
+                                        color = Color.White.copy(alpha = 0.7f),
                                         modifier = Modifier
                                             .paddingXXSmall()
                                             .wrapContentWidth()
-                                            .wrapContentHeight(),
+                                            .wrapContentHeight()
+                                            .clickable { uriHandler.openUri(new.url) },
                                         shape = SpaceXShapes.large
                                     ) {
                                         Text(
-                                            text = new.newsSite.uppercase(),
-                                            style = MaterialTheme.typography.body1,
-                                            modifier = Modifier.paddingSmall(),
-                                            color = Color.White
+                                            text = "Open website",
+                                            style = TextStyle(
+                                                color = Color.Black,
+                                                fontSize = 16.sp
+                                            ),
+                                            modifier = Modifier.paddingSmall()
                                         )
                                     }
                                 }
                             }
-
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = new.title,
-                                style = MaterialTheme.typography.h5,
-                                color = Color.White,
-                                modifier = Modifier.paddingSmall()
-                            )
-                            Text(
-                                text = new.summary,
-                                style = MaterialTheme.typography.body1,
-                                color = Color.White,
-                                modifier = Modifier.paddingSmall()
-                            )
-
-                            Spacer(modifier = Modifier.height(8.dp))
+                            if (!new.newsSite.isNullOrBlank()) {
+                                Surface(
+                                    color = Color.Black.copy(alpha = 0.7f),
+                                    modifier = Modifier
+                                        .paddingXXSmall()
+                                        .wrapContentWidth()
+                                        .wrapContentHeight(),
+                                    shape = SpaceXShapes.large
+                                ) {
+                                    Text(
+                                        text = new.newsSite.uppercase(),
+                                        style = MaterialTheme.typography.body1,
+                                        modifier = Modifier.paddingSmall(),
+                                        color = Color.White
+                                    )
+                                }
+                            }
                         }
 
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = new.title,
+                            style = MaterialTheme.typography.h5,
+                            color = Color.White,
+                            modifier = Modifier.paddingSmall()
+                        )
+                        Text(
+                            text = new.summary,
+                            style = MaterialTheme.typography.body1,
+                            color = Color.White,
+                            modifier = Modifier.paddingSmall()
+                        )
+
+                        Spacer(modifier = Modifier.height(8.dp))
                     }
+
                 }
             }
-
-            if (isLoading)
-                LoadingState()
-
         }
+
+        if (isLoading)
+            LoadingState()
+
     }
 }

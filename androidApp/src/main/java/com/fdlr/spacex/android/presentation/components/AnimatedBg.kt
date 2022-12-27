@@ -4,10 +4,7 @@ import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.focusable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -19,6 +16,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import com.fdlr.spaceX.android.R
+import com.fdlr.spacex.android.presentation.utils.theme.bgGradientBlueBrush
 import com.fdlr.spacex.android.presentation.utils.theme.bgGradientPurpleBrush
 
 @Composable
@@ -31,8 +29,8 @@ fun AnimatedBg(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(bgGradientPurpleBrush)
-        ) {
+                .background(if(isSystemInDarkTheme()) bgGradientBlueBrush else bgGradientPurpleBrush))
+         {
             SuspendAnimation(speedAnimation)
             content()
         }

@@ -2,6 +2,7 @@ package com.fdlr.spacex.android.presentation.details
 
 import androidx.compose.runtime.Composable
 import com.fdlr.spacex.android.presentation.details.components.DetailView
+import com.fdlr.spacex.android.presentation.utils.theme.SpaceXTheme
 import com.fdlr.spacex.presentation.details.DetailsEvents
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -16,22 +17,21 @@ fun DetailsScreen(
 ) {
     val state = viewModel.state.value
 
-    DetailView(
-        new = state.new,
-        isLoading = state.isLoading,
-        onOpenWebsite = { open ->
-//            viewModel.onTriggerEvent(DetailsEvents.OnOpenWebsite(open))
-        },
+    SpaceXTheme(
+        dialogQueue = state.queue,
         onRemoveHeadMessageFromQueue = {
             viewModel.onTriggerEvent(DetailsEvents.OnRemoveHeadMessageFromQueue)
-        },
-        onNavigateUp = {
-            navigator.navigateUp()
         }
-    )
-
-    viewModel.onTriggerEvent(DetailsEvents.LoadNew(id))
-
+    ) {
+        DetailView(
+            new = state.new,
+            isLoading = state.isLoading,
+            onNavigateUp = {
+                navigator.navigateUp()
+            }
+        )
+        viewModel.onTriggerEvent(DetailsEvents.LoadNew(id))
+    }
 }
 
 

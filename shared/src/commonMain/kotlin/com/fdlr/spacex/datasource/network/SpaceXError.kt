@@ -8,5 +8,5 @@ enum class SpaceXError {
 }
 
 class SpaceXException(val error: SpaceXError): Exception(
-    "An error occurred when translating: $error"
+    "An error occurred: $error"
 )

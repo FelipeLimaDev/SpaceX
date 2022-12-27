@@ -17,12 +17,14 @@ import com.fdlr.spacex.android.presentation.utils.paddingTopMedium
 import com.fdlr.spacex.android.presentation.utils.paddingXXSmall
 import com.fdlr.spacex.android.presentation.utils.theme.SpaceXShapes
 import com.fdlr.spacex.datasource.network.model.NewDto
+import com.fdlr.spacex.presentation.home.HomeEvents
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun NewsList(
     loading: Boolean,
+    query: String,
     news: List<NewDto>,
     onClickNewItem: (Int) -> Unit,
     page: Int,
@@ -75,6 +77,30 @@ fun NewsList(
                     onClickNewItem = onClickNewItem
                 )
             }
+            item {
+                if (!loading && news.isEmpty() && query.isEmpty()) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = "No news available",
+                            style = MaterialTheme.typography.h3,
+                            modifier = Modifier.paddingSmall()
+                        )
+                        Text(
+                            text = "TRY AGAIN",
+                            style = MaterialTheme.typography.h2,
+                            modifier = Modifier
+                                .paddingSmall()
+                                .clickable {
+                                    onRefresh()
+                                })
+                    }
+                }
+            }
         }
     }
 }
@@ -119,7 +145,8 @@ fun NewItem(
                     Text(
                         text = new.title,
                         style = MaterialTheme.typography.subtitle1,
-                        modifier = Modifier.paddingSmall()
+                        modifier = Modifier.paddingSmall(),
+                        color = Color.Black
                     )
                 }
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.TopStart) {

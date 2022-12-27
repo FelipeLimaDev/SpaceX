@@ -1,6 +1,7 @@
 package com.fdlr.spacex.useCases
 
 import com.fdlr.domain.model.model.GenericMessageInfo
+import com.fdlr.domain.model.model.PositiveAction
 import com.fdlr.domain.model.model.UIComponentType
 import com.fdlr.domain.model.util.CommonFlow
 import com.fdlr.domain.model.util.DataState
@@ -36,6 +37,7 @@ class HomeNewsUseCase(
                         .title("Error")
                         .uiComponentType(UIComponentType.Dialog)
                         .description(e.message ?: "Unknown Error")
+                        .positive(PositiveAction("Ok") { })
                 )
             )
         }
