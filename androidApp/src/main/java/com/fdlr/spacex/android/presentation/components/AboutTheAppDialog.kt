@@ -107,7 +107,7 @@ fun CustomAboutDialog(
                                     Image(
                                         painter = painterResource(id = R.drawable.ic_github),
                                         contentDescription = null,
-                                        modifier = Modifier.clickable { uriHandler.openUri("https://github.com/Fdlr/Meus-Pets") }
+                                        modifier = Modifier.clickable { uriHandler.openUri("https://github.com/Fdlr/") }
                                     )
                                     ClickableText(
                                         modifier = Modifier.padding(top = 15.dp),
